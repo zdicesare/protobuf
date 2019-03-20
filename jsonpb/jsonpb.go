@@ -361,7 +361,7 @@ func (m *Marshaler) marshalObject(out *errWriter, v proto.Message, indent, typeU
 			value := reflect.ValueOf(ext)
 			var prop proto.Properties
 			prop.Parse(desc.Tag)
-			prop.JSONName = fmt.Sprintf("[%s]", desc.Name)
+			prop.JSONName = fmt.Sprintf("%s", desc.Name)
 			if !firstField {
 				m.writeSep(out)
 			}
@@ -959,7 +959,7 @@ func (u *Unmarshaler) unmarshalValue(target reflect.Value, inputValue json.RawMe
 		if len(jsonFields) > 0 {
 			if ep, ok := target.Addr().Interface().(proto.Message); ok {
 				for _, ext := range proto.RegisteredExtensions(ep) {
-					name := fmt.Sprintf("[%s]", ext.Name)
+					name := fmt.Sprintf("%s", ext.Name)
 					raw, ok := jsonFields[name]
 					if !ok {
 						continue
